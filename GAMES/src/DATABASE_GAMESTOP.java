@@ -30,7 +30,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 	private DATA myData = new DATA();
 	private ArrayList<Plataforma> myPlataformas;
 	private Plataforma myPlataforma;
-	
+/**
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -48,6 +48,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 			}
 		});
 	}
+	/**/
 	public DATABASE_GAMESTOP() {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {

@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -22,7 +24,7 @@ public class DATA {
 	private JComboBox<Games> ComboBoxGames;
 	private ResultSet conjuntoResultado = null ;
 	private JComboBox ComboBox;
-	
+	private ResultSet misResultadosUsers = null;
 	
 	public DATA() {
 		try {
@@ -37,6 +39,42 @@ public class DATA {
 		}		
 
 	}
+	//---------------------------------------------
+	public void acceder(String usuario, String pass)
+    {
+        String cap="";
+       String sql="SELECT * FROM usuario WHERE nick='"+usuario+"' && password='"+pass+"'";
+        try {
+        	instruccion = (Statement) conexion.createStatement();
+        	misResultadosUsers  = instruccion.executeQuery(sql);
+ 
+            while(misResultadosUsers.next())
+            {
+                cap=misResultadosUsers.getString("tipousuario");
+            }
+            if(cap.equals("Administrador"))
+            {
+                  
+                    JOptionPane.showMessageDialog(null, "Bienvenido");
+                    System.out.println("Administrador");
+                
+            }
+            if(cap.equals("Invitado"))
+            {
+            
+                    JOptionPane.showMessageDialog(null, "Bienvenido");
+                    System.out.println("Invitado");
+            }
+            if((!cap.equals("Administrador"))&& (!cap.equals("Invitado")))
+            {
+            	System.out.println("No existe user ");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DATA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        }
+	//-----------------------------------------
 	
 	
 	public void rellenarCombobox(){
