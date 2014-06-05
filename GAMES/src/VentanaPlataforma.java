@@ -32,7 +32,7 @@ public class VentanaPlataforma extends JFrame{
 	public VentanaPlataforma( final Plataforma myPlataforma,final DATA myData, JComboBox<Plataforma> ComboBoxPlataforma) {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
-				refrescarData();
+				//refrescarData();
 				
 			}
 			public void windowLostFocus(WindowEvent arg0) {
@@ -103,7 +103,7 @@ public class VentanaPlataforma extends JFrame{
 		public void actionPerformed(ActionEvent arg0) {
 			myPlataforma.setnombrePlataforma(textField_Plataforma.getText());
 			myGames = new Games(myPlataforma.getIdPlataforma());
-			System.out.println(myGamesPlat.size());
+			//System.out.println(myGamesPlat.size());
 			VentanaGame frame = new VentanaGame(myGames,myData,myPlataforma,ComboBoxGames);
 			frame.setVisible(true);
 			refrescarData();
@@ -134,16 +134,18 @@ public class VentanaPlataforma extends JFrame{
 			
 			 //myData.readGames(myPlataforma.getIdPlataforma());
 			// ComboBoxGames.removeAllItems();
-			refrescarDatos2();
+		//	refrescarDatos2();
 			 
 			
 			}
 		});
-	
-		JButton btnSaveplatform = new JButton("Save platform");
-		btnSaveplatform.setBounds(154, 67, 112, 23);
-		contentPane.add(buttRef);
-		btnSaveplatform.addActionListener(new ActionListener() {
+	// OJIIIITTOOOOO MIRAR -..>
+		
+		
+		JButton btnsavePlataforma = new JButton("saveplata");
+		btnsavePlataforma.setBounds(164, 67, 89, 23);
+		contentPane.add(btnsavePlataforma);
+		btnsavePlataforma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				myPlataforma.setnombrePlataforma(textField_Plataforma.getText());
 				myPlataforma.setnumGames(Integer.valueOf(textField_NumGames.getText()));
@@ -168,7 +170,7 @@ public class VentanaPlataforma extends JFrame{
 			}
 		
 	}
-		
+		/**
 		public void refrescarDatos2(){
 			ComboBoxGames.removeAllItems();
 			myData.readingGames(ComboBoxGames);
@@ -176,7 +178,7 @@ public class VentanaPlataforma extends JFrame{
 			myGames = (Games) ComboBoxGames.getSelectedItem();
 				System.out.println("-"+myGames);
 				
-			}	
+			}	**/
 }
 
 

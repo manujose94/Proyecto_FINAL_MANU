@@ -28,6 +28,10 @@ public class Plataforma {
 		my_gamePlataforma = new ArrayList<Games>();
 	}
 
+	public void setPlataforma(String nombrePlataforma, int numGames ){
+		this.nombrePlataforma = nombrePlataforma;
+		this.numGames=numGames;
+	}
 	@Override
 	public String toString() {
 		return nombrePlataforma;
@@ -51,7 +55,7 @@ public class Plataforma {
 		my_gamePlataforma.add(myGame);
 		my_Data.saveGame(myGame);
 	}
-
+	
 	public void rmGame(int indice, Games myGame){
 		my_gamePlataforma.remove(indice);
 		my_Data.rmGame(myGame);

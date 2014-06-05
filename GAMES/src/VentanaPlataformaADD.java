@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -17,11 +19,27 @@ public class VentanaPlataformaADD extends JFrame{
 	private JPanel contentPane;
 	private JTextField textField_Plataforma;
 	private JTextField textField_NumGames;	
+	private ArrayList<Plataforma> myPlataformas;
 	private JComboBox<Plataforma> ComboPlataformas;
+	private DATABASE_GAMESTOP frameGameStop;
+	private DATA myData = new DATA();
+	
 	
 	
 	public VentanaPlataformaADD( final Plataforma myPlataforma,final DATA myData, JComboBox<Plataforma> ComboBoxPlataforma) {
 		
+		//CerrarVentana();
+		addWindowFocusListener(new WindowFocusListener() {
+			public void windowGainedFocus(WindowEvent arg0) {
+				System.out.println("No hay Plataformas disponibles");
+				
+			}
+			public void windowLostFocus(WindowEvent arg0) {
+			}
+		});
+		
+		
+	
 		
 		this.myPlataforma = myPlataforma;
 		ComboPlataformas = ComboBoxPlataforma;
@@ -61,11 +79,36 @@ public class VentanaPlataformaADD extends JFrame{
 		
 		btnADDPlataforma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				myPlataforma.setnombrePlataforma(textField_Plataforma.getText());
-				myPlataforma.setnumGames(Integer.valueOf(textField_NumGames.getText()));
+				//myPlataforma.setnombrePlataforma(textField_Plataforma.getText());
+				//myPlataforma.setnumGames(Integer.valueOf(textField_NumGames.getText()));
+				myPlataforma.setPlataforma(textField_Plataforma.getText(),Integer.valueOf(textField_NumGames.getText()));
 				myPlataforma.savePlataforma(myPlataforma,ComboPlataformas);
 				
+				
+				
 			}
+
+
 		});
+		
+	
+		
+	
+		
 }
+	
+	
+	private void refrescar(){
+		ComboPlataformas.removeAllItems();
+		myPlataformas = myData.readPlataforma();
+		if(myPlataformas.size()==0){
+			System.out.println("No hay Plataformas disponibles");
+		}else {
+			for(int i=0;i<myPlataformas.size();i++){
+				ComboPlataformas.addItem(myPlataformas.get(i));
+			}
+		}
+	}
+	
 }
+

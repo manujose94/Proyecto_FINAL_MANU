@@ -40,7 +40,7 @@ public class DATA {
 
 	}
 	//---------------------------------------------
-	public void acceder(String usuario, String pass)
+	/**public void acceder(String usuario, String pass)
     {
         String cap="";
        String sql="SELECT * FROM usuario WHERE nick='"+usuario+"' && password='"+pass+"'";
@@ -73,7 +73,7 @@ public class DATA {
             Logger.getLogger(DATA.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-        }
+        }**/
 	//-----------------------------------------
 	
 	
@@ -142,6 +142,22 @@ public class DATA {
 		return myPlataforma;
 	}
 	
+	public void rmPlataforma(Plataforma myPlataforma){
+		try{
+			
+			instruccion = (Statement) conexion.createStatement();
+			String sql_Strng1 = "DELETE FROM `games`.`games` WHERE `games`.`IdPlataforma` ="+myGame.getIdPlataforma();
+			String sql_Strng2 = "DELETE FROM `games`.`plataforma` WHERE `plataforma`.`IdPlataforma` ="+myPlataforma.getIdPlataforma();
+			
+			System.out.println(sql_Strng1);
+			System.out.println(sql_Strng2);
+			//instruccion.executeUpdate(sql_Strng);
+			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	
 	public void savePlataforma(Plataforma myPlataforma,JComboBox<Plataforma> comboBoxPlataforma){
 		if(myPlataforma.getIdPlataforma()>0){
 			try{
@@ -168,6 +184,8 @@ public class DATA {
 		}
 	}
 
+	
+	
 	public ArrayList<Games> readGames(int idPlataforma){
 		myGames.removeAll(myGames);
 		System.out.println("++ Game");

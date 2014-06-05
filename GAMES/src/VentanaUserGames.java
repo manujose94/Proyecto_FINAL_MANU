@@ -1,9 +1,18 @@
+import javax.swing.JFrame;
+
+
+
+
+
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,58 +28,48 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-
-import javax.swing.JComboBox;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.UIManager;
-import javax.swing.border.MatteBorder;
+import javax.swing.SwingConstants;
 
 
-public class VentanaUser extends JFrame {
+public class VentanaUserGames extends JFrame {
 
 	private JPanel contentPane;
 	private DefaultTableModel dtmEjemplo;
 	private JTable table;
 	private JScrollPane scpEjemplo;
-	private JComboBox<Plataforma> ComboPlataformas;
-	private DATA myData = new DATA();
-	private ArrayList<Plataforma> myPlataformas;
+
 	private Plataforma myPlataforma;
-	private DATABASE_GAMESTOP gamestop;
-
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaUser frame = new VentanaUser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public VentanaUser() {
+	private int IdPlataforma;
+	private Games myGames;
+	private DATA myData;
+	private JTextField textField_Plataforma;
+	private JTextField textField_NumGames;
+	private JComboBox<Games> ComboBoxGames;
+	private JComboBox<Plataforma> ComboPlataformas;
+	private ArrayList<Games> myGamesPlat;
+	private JTextField textFieldnomPlataforma;
+	private JLabel lblnomPlataforma;
+	
+	
+	public VentanaUserGames( final Plataforma myPlataforma,final DATA myData, final JComboBox<Plataforma> ComboBoxPlataforma) {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
-				refrescar();
+				;
+				lblnomPlataforma.setText(myPlataforma.toString());
 			}
 			public void windowLostFocus(WindowEvent arg0) {
 			}
 		});
+		IdPlataforma=myPlataforma.getIdPlataforma();
+
+		this.myPlataforma = myPlataforma;
+		this.myData = myData;
+		ComboPlataformas = ComboBoxPlataforma;
+
 		//PARTE GRÁFICA SWING
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -98,41 +97,29 @@ public class VentanaUser extends JFrame {
 
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setToolTipText("");
-		scrollPane.setViewportBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(0, 0, 0)));
-		scrollPane.setBounds(10, 10, 414, 117);
+		scrollPane.setBounds(10, 49, 414, 186);
 		scrollPane.add(table);
 		//REvisar la documentación para ver que significa el JScrollPane
 		//http://docs.oracle.com/javase/7/docs/api/javax/swing/JScrollPane.html
 		scrollPane.setViewportView(table);
 		contentPane.add(scrollPane);
 		
-		ComboPlataformas = new  JComboBox<Plataforma>();
-		ComboPlataformas.setBounds(91, 189, 251, 36);
-		contentPane.add(ComboPlataformas);
+	
 		
-		JButton btnSeeGames = new JButton("WHATCH GAMES");
-		btnSeeGames.setForeground(UIManager.getColor("Button.focus"));
-		btnSeeGames.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnSeeGames.setBackground(Color.DARK_GRAY);
-		btnSeeGames.setBounds(141, 155, 148, 23);
-		contentPane.add(btnSeeGames);
-		btnSeeGames.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//Indicamos  Myplatoforma contega lo seccionado del combobox obtinido (get) del ArralyList Plataforma
-				myPlataforma = myPlataformas.get(ComboPlataformas.getSelectedIndex());
-				VentanaUserGames frame = new VentanaUserGames(myPlataforma, myData,ComboPlataformas);
-				frame.setVisible(true);
-			}
-			
-		});
+		lblnomPlataforma = new JLabel();
+		lblnomPlataforma.setHorizontalAlignment(SwingConstants.CENTER);
+		lblnomPlataforma.setForeground(Color.RED);
+		lblnomPlataforma.setFont(new Font("Forte", Font.BOLD, 15));
+		lblnomPlataforma.setBounds(150, 11, 136, 27);
+		contentPane.add(lblnomPlataforma);
+
 
 	}
 
     //Encabezados de la tabla
     private String[] rellenarTitColumnas()
     {
-          String columna[]=new String[]{"IdPlataforma","nombrePlataforma","numGames"};
+          String columna[]=new String[]{"ID","TITULO","PUNTUACION"};
           return columna;
     }
 
@@ -147,7 +134,8 @@ public class VentanaUser extends JFrame {
 			// crea objeto Statement para consultar la base de datos
 			instruccion = (Statement) conexion.createStatement();
 			// consulta la base de datos
-			conjuntoResultados = instruccion.executeQuery("SELECT IdPlataforma,nombrePlataforma,numGames FROM plataforma");
+			String sql_Strng="SELECT IdGame,nombreGame,Puntuacion FROM games WHERE `IdPlataforma`="+IdPlataforma;
+			conjuntoResultados = instruccion.executeQuery(sql_Strng);
 			//Añadir datos al modelo
 	        Object datos[]=new Object[3]; //Numero de columnas de la tabla
 	        while (conjuntoResultados.next()) {
@@ -164,19 +152,5 @@ public class VentanaUser extends JFrame {
 		{
 			noEncontroClase.printStackTrace();
 		}// fin de catch		
-	}
-	
-
-	public void refrescar(){
-		ComboPlataformas.removeAllItems();
-		myPlataformas = myData.readPlataforma();
-		if(myPlataformas.size()==0){
-			System.out.println("No hay Plataformas dispoinibles");
-		}else {
-			for(int i=0;i<myPlataformas.size();i++){
-				ComboPlataformas.addItem(myPlataformas.get(i));
-			}
-		
-		}
 	}
 }

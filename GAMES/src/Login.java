@@ -1,6 +1,8 @@
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,10 +18,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JMenuBar;
 
 public class Login  extends JFrame{
 
 
+	private VentanaUser VentanaUser1;
 	private DATABASE_GAMESTOP basedato_gamestop;
 	private String us;
 	private String pass;
@@ -46,7 +53,7 @@ public class Login  extends JFrame{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}		
-
+		 
 	        /* Set the Nimbus look and feel */
 	        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 	        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -79,33 +86,75 @@ public class Login  extends JFrame{
 	        });
 	    }
 	
-	
+	 public void CerrarVentana(){
+
+
+			try {
+				this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				
+			
+			 addWindowListener(new WindowAdapter() {
+			   public void windowClosing(WindowEvent e) {
+				  confirmarSalida();
+			    
+			   } 
+			 });
+			 this.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			 //frameGameStop = new DATABASE_GAMESTOP();
+			// frameGameStop.setVisible(true);
+			 //frameGameStop.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		public void confirmarSalida(){
+			int valor=JOptionPane.showConfirmDialog(this, "Desea Cerrar la Aplicacion GAMESTOP");
+			
+			if(valor==JOptionPane.YES_OPTION){
+				JOptionPane.showMessageDialog(this, "Gracias por su Visita ;)");
+				System.exit(0);
+				
+			}
+			if(valor==JOptionPane.NO_OPTION)
+            {
+				new Login().setVisible(true);
+				
+            }
+		}
+		
 	
 	
 	
 	
 	public Login() {
+		CerrarVentana();
 		
 getContentPane().setLayout(null);
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 setBounds(200, 300, 400, 280);
 JPanel contentPane = new JPanel();
 contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 setContentPane(contentPane);
 contentPane.setLayout(null);
 		textFieldNICK = new JTextField();
-		textFieldNICK.setBounds(64, 45, 86, 20);
+		textFieldNICK.setBounds(59, 54, 86, 33);
 		getContentPane().add(textFieldNICK);
 		textFieldNICK.setColumns(10);
 		
 		textFieldPASS = new JTextField();
-		textFieldPASS.setBounds(239, 45, 86, 20);
+		textFieldPASS.setBounds(247, 54, 86, 33);
 		getContentPane().add(textFieldPASS);
 		textFieldPASS.setColumns(10);
 		
-		btnACCEDER = new JButton("Acceder");
-		btnACCEDER.setBounds(172, 133, 89, 23);
+		btnACCEDER = new JButton("LOGIN");
+		btnACCEDER.setBounds(108, 157, 180, 38);
 		getContentPane().add(btnACCEDER);
+		
+		JLabel lblAccederAGamestop = new JLabel("ACCEDER A GAMESTOP");
+		lblAccederAGamestop.setForeground(Color.RED);
+		lblAccederAGamestop.setFont(new Font("Vrinda", Font.BOLD, 13));
+		lblAccederAGamestop.setBounds(120, 11, 180, 14);
+		contentPane.add(lblAccederAGamestop);
 		btnACCEDER.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 us=textFieldNICK.getText();
@@ -116,6 +165,10 @@ contentPane.setLayout(null);
 	
 		
 	}
+	
+	
+	
+	
 	//---------------------------------------------
 	public void acceder(String usuario, String pass)
     {
@@ -140,7 +193,7 @@ contentPane.setLayout(null);
             }
             if(tipo.equals("Invitado"))
             {
-            
+            	new VentanaUser().setVisible(true);
                     
                     System.out.println("Invitado");
             }
@@ -154,8 +207,4 @@ contentPane.setLayout(null);
         }
        
         }
-	//-----------------------------------------
-	
-	
-
 }

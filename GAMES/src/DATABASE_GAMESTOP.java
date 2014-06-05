@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -14,6 +15,7 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowFocusListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 	private DATA myData = new DATA();
 	private ArrayList<Plataforma> myPlataformas;
 	private Plataforma myPlataforma;
+
 /**
 	public static void main(String[] args) {
 		try {
@@ -50,14 +53,15 @@ public class DATABASE_GAMESTOP extends JFrame {
 	}
 	/**/
 	public DATABASE_GAMESTOP() {
+		CerrarVentana();
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
-				
+				refrescar();
 			}
 			public void windowLostFocus(WindowEvent arg0) {
 			}
 		});
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(200, 300, 478, 290);
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -65,11 +69,11 @@ public class DATABASE_GAMESTOP extends JFrame {
 		contentPane.setLayout(null);
 		
 		ComboPlataformas = new  JComboBox<Plataforma>();
-		ComboPlataformas.setBounds(32, 151, 376, 25);
+		ComboPlataformas.setBounds(63, 135, 376, 30);
 		getContentPane().add(ComboPlataformas);
 		
 		JButton btnMODPALT = new JButton("Mod. Platform");
-		btnMODPALT.setBounds(56, 54, 120, 66);
+		btnMODPALT.setBounds(69, 54, 120, 66);
 		getContentPane().add(btnMODPALT);
 		btnMODPALT.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -79,9 +83,33 @@ public class DATABASE_GAMESTOP extends JFrame {
 			frame.setVisible(true);
 		}
 	});
+		
+		JButton btnDelete = new JButton("DELETE");
+		btnDelete.setBounds(187, 76, 89, 23);
+		contentPane.add(btnDelete);
+		/**
+		btnDelete.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			myPlataforma = myPlataformas.get(ComboPlataformas.getSelectedIndex());
+			System.out.println(ComboPlataformas.getSelectedItem());
+			myPlataforma.rmPlataforma(ComboPlataformas.getSelectedIndex(), myPlataforma);
+			
+			
+		
+		}
+	});
+		**/
+	
+		
+		
+		
+		
+		
+		
 		JButton btnADDPLAT = new JButton("Add Platform");
-		btnADDPLAT.setBounds(245, 54, 120, 66);
+		btnADDPLAT.setBounds(274, 54, 120, 66);
 		getContentPane().add(btnADDPLAT);
+
 		btnADDPLAT.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			myPlataforma = new Plataforma();
@@ -89,11 +117,22 @@ public class DATABASE_GAMESTOP extends JFrame {
 			frame.setVisible(true);
 		}
 	});
-		refrescar();
+		JButton btnRefs = new JButton("REFS");
+		btnRefs.setBounds(187, 199, 89, 23);
+		contentPane.add(btnRefs);
+		
+		
+		btnRefs.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			refrescar();
+		}
+	});
+		
 	}	
 		
 		
-		private void refrescar(){
+		public void refrescar(){
+			ComboPlataformas.removeAllItems();
 			myPlataformas = myData.readPlataforma();
 			if(myPlataformas.size()==0){
 				System.out.println("No hay Plataformas dispoinibles");
@@ -102,17 +141,44 @@ public class DATABASE_GAMESTOP extends JFrame {
 					ComboPlataformas.addItem(myPlataformas.get(i));
 				}
 			}
-		
-		
-	}
-
 	
-
-
-
-	/**
-	 * Launch the application.
-	 */
-
 	}
+		 public void CerrarVentana(){
+
+
+				try {
+					this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+					
+				
+				 addWindowListener(new WindowAdapter() {
+				   public void windowClosing(WindowEvent e) {
+					  confirmarSalida();
+				    
+				   } 
+				 });
+				 this.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				 //frameGameStop = new DATABASE_GAMESTOP();
+				// frameGameStop.setVisible(true);
+				 //frameGameStop.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			}
+			public void confirmarSalida(){
+				int valor=JOptionPane.showConfirmDialog(this, "Deseas Deslogarte como ADMINISTRADOR(LIDER)" );
+				
+				if(valor==JOptionPane.YES_OPTION){
+					JOptionPane.showMessageDialog(this, " NARARNARNANRNARN LIDER !!");
+					
+					
+				}
+				if(valor==JOptionPane.NO_OPTION)
+	            {
+					new DATABASE_GAMESTOP().setVisible(true);
+					JOptionPane.showMessageDialog(this, " ADORO AL LIDER!");
+					
+	            }
+			}
+			
+}
 
