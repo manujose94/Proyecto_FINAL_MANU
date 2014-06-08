@@ -1,12 +1,17 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import java.net.ContentHandler;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -26,7 +31,9 @@ import java.awt.event.WindowFocusListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+
 import java.awt.Font;
+
 import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 
@@ -44,25 +51,8 @@ public class VentanaUser extends JFrame {
 	private DATABASE_GAMESTOP gamestop;
 
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaUser frame = new VentanaUser();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
-	/**
-	 * Create the frame.
-	 */
 	public VentanaUser() {
 		addWindowFocusListener(new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent arg0) {
@@ -73,22 +63,27 @@ public class VentanaUser extends JFrame {
 		});
 		//PARTE GRÁFICA SWING
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 970, 545);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		//FONDO
+				setIconImage(new ImageIcon(getClass().getResource("/imagen/Placa.png")).getImage());
+				((JPanel)getContentPane()).setOpaque(false);
+				ImageIcon uno=new ImageIcon(this.getClass().getResource("/imagen/halo.jpg")); 
+				JLabel fondo= new JLabel(); 
+				fondo.setIcon(uno); 
+				getLayeredPane().add(fondo,JLayeredPane.FRAME_CONTENT_LAYER); 
+				fondo.setBounds(0,0,uno.getIconWidth(),uno.getIconHeight());
+				Dimension tam=getSize();
+				setSize(tam.width,tam.height);
+				setVisible(true);
 
 
 		//JTABLE
-        //1.- Definimos el modelo de JTable, en nuestro caso DefaultModel
-		//2.- Definimos los títulos de las columnas
-		//3.- REllenamos las filas a partir de la consulta a la base de datos
-		//3.- Creamos el JTable y le asignamosel modelo rellenado
-		//4,. Ponemos el JTable dentro de un JScrollPane para poder hacer scroll
-		//5.- Damos visivilidad al JTable con setViewportView
-        dtmEjemplo = new DefaultTableModel(null,rellenarTitColumnas());
+       dtmEjemplo = new DefaultTableModel(null,rellenarTitColumnas());
         
 		//CONEXION A BASE DE DATOS
 		conexionDB();       
@@ -100,7 +95,7 @@ public class VentanaUser extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setToolTipText("");
 		scrollPane.setViewportBorder(new MatteBorder(2, 1, 2, 1, (Color) new Color(0, 0, 0)));
-		scrollPane.setBounds(10, 10, 414, 117);
+		scrollPane.setBounds(314, 11, 339, 145);
 		scrollPane.add(table);
 		//REvisar la documentación para ver que significa el JScrollPane
 		//http://docs.oracle.com/javase/7/docs/api/javax/swing/JScrollPane.html
@@ -108,14 +103,16 @@ public class VentanaUser extends JFrame {
 		contentPane.add(scrollPane);
 		
 		ComboPlataformas = new  JComboBox<Plataforma>();
-		ComboPlataformas.setBounds(91, 189, 251, 36);
+		ComboPlataformas.setForeground(Color.DARK_GRAY);
+		ComboPlataformas.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
+		ComboPlataformas.setBounds(346, 431, 279, 29);
 		contentPane.add(ComboPlataformas);
 		
-		JButton btnSeeGames = new JButton("WHATCH GAMES");
+		JButton btnSeeGames = new JButton("WATCH GAMES");
 		btnSeeGames.setForeground(UIManager.getColor("Button.focus"));
 		btnSeeGames.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSeeGames.setBackground(Color.DARK_GRAY);
-		btnSeeGames.setBounds(141, 155, 148, 23);
+		btnSeeGames.setBounds(408, 375, 148, 29);
 		contentPane.add(btnSeeGames);
 		btnSeeGames.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -132,7 +129,7 @@ public class VentanaUser extends JFrame {
     //Encabezados de la tabla
     private String[] rellenarTitColumnas()
     {
-          String columna[]=new String[]{"IdPlataforma","nombrePlataforma","numGames"};
+          String columna[]=new String[]{"ID","NAME_PLAT","NUMBER-OF-GAMES"};
           return columna;
     }
 

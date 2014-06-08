@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -5,14 +6,24 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 
 public class VentanaPlataformaADD extends JFrame{
 	private Plataforma myPlataforma;
@@ -47,34 +58,57 @@ public class VentanaPlataformaADD extends JFrame{
 		
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 456, 320);
+		setBounds(100, 100, 780, 500);
 		contentPane = new JPanel();
+		contentPane.setForeground(new Color(0, 0, 0));
+		contentPane.setBackground(SystemColor.textHighlightText);
 		
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new CompoundBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		//FONDO
+				setIconImage(new ImageIcon(getClass().getResource("/imagen/logoass.png")).getImage());
+				((JPanel)getContentPane()).setOpaque(false);
+				ImageIcon uno=new ImageIcon(this.getClass().getResource("/imagen/limbo.jpg")); 
+				JLabel fondo= new JLabel(); 
+				fondo.setIcon(uno); 
+				getLayeredPane().add(fondo,JLayeredPane.FRAME_CONTENT_LAYER); 
+				fondo.setBounds(0,0,uno.getIconWidth(),uno.getIconHeight());
+				Dimension tam=getSize();
+				setSize(tam.width,tam.height);
+				setVisible(true);
 		
 		
 		JLabel lblPlataforma = new JLabel("Platform");
-		lblPlataforma.setBounds(180, 11, 62, 14);
+		lblPlataforma.setFont(new Font("Tempus Sans ITC", Font.BOLD, 22));
+		lblPlataforma.setBounds(234, 42, 92, 24);
 		getContentPane().add(lblPlataforma);
 		
 		JLabel lblNGames = new JLabel("N\u00BA Games");
-		lblNGames.setBounds(193, 122, 49, 14);
+		lblNGames.setFont(new Font("Tempus Sans ITC", Font.BOLD, 19));
+		lblNGames.setBounds(234, 272, 102, 23);
 		getContentPane().add(lblNGames);
 		
 		textField_Plataforma = new JTextField();
-		textField_Plataforma.setBounds(113, 36, 203, 20);
+		textField_Plataforma.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_Plataforma.setForeground(new Color(105, 105, 105));
+		textField_Plataforma.setBackground(new Color(253, 245, 230));
+		textField_Plataforma.setBounds(174, 77, 203, 20);
 		getContentPane().add(textField_Plataforma);
 		textField_Plataforma.setColumns(10);
 		
 		textField_NumGames = new JTextField();
-		textField_NumGames.setBounds(180, 147, 73, 20);
+		textField_NumGames.setHorizontalAlignment(SwingConstants.CENTER);
+		textField_NumGames.setForeground(new Color(105, 105, 105));
+		textField_NumGames.setBackground(new Color(250, 240, 230));
+		textField_NumGames.setBounds(252, 318, 73, 20);
 		getContentPane().add(textField_NumGames);
 		textField_NumGames.setColumns(10);
 		
 		JButton btnADDPlataforma = new JButton("ADD");
-		btnADDPlataforma.setBounds(164, 214, 89, 23);
+		btnADDPlataforma.setBackground(SystemColor.window);
+		btnADDPlataforma.setFont(new Font("Tempus Sans ITC", Font.BOLD, 14));
+		btnADDPlataforma.setBounds(237, 367, 112, 32);
 		contentPane.add(btnADDPlataforma);
 		
 		btnADDPlataforma.addActionListener(new ActionListener() {

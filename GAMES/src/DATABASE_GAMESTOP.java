@@ -1,9 +1,13 @@
 
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +29,12 @@ import javax.swing.UIManager;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import java.awt.Font;
+import javax.swing.JToolBar;
+import javax.swing.JInternalFrame;
+
 
 public class DATABASE_GAMESTOP extends JFrame {
 	
@@ -32,26 +42,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 	private DATA myData = new DATA();
 	private ArrayList<Plataforma> myPlataformas;
 	private Plataforma myPlataforma;
-
-/**
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DATABASE_GAMESTOP frame = new DATABASE_GAMESTOP();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	/**/
+	
 	public DATABASE_GAMESTOP() {
 		CerrarVentana();
 		addWindowFocusListener(new WindowFocusListener() {
@@ -62,18 +53,42 @@ public class DATABASE_GAMESTOP extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(200, 300, 478, 290);
+		setBounds(300, 100, 850, 560);
 		JPanel contentPane = new JPanel();
+		contentPane.setBackground(new Color(102, 204, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		//FONDO
+		setIconImage(new ImageIcon(getClass().getResource("/imagen/logoass.png")).getImage());
+		((JPanel)getContentPane()).setOpaque(false);
+		ImageIcon uno=new ImageIcon(this.getClass().getResource("/imagen/asse.jpg")); 
+		JLabel fondo= new JLabel(); 
+		fondo.setIcon(uno); 
+		getLayeredPane().add(fondo,JLayeredPane.FRAME_CONTENT_LAYER); 
+		fondo.setBounds(0,0,uno.getIconWidth(),uno.getIconHeight());
+		Dimension tam=getSize();
+		setSize(tam.width,tam.height);
+		setVisible(true);
+		
 		
 		ComboPlataformas = new  JComboBox<Plataforma>();
-		ComboPlataformas.setBounds(63, 135, 376, 30);
+		ComboPlataformas.setFont(new Font("Viner Hand ITC", Font.BOLD, 14));
+		ComboPlataformas.setBackground(new Color(0, 102, 255));
+		ComboPlataformas.setBounds(146, 177, 332, 30);
 		getContentPane().add(ComboPlataformas);
 		
-		JButton btnMODPALT = new JButton("Mod. Platform");
-		btnMODPALT.setBounds(69, 54, 120, 66);
+		JButton btnMODPALT = new JButton("");
+		btnMODPALT.setSelectedIcon(new ImageIcon(DATABASE_GAMESTOP.class.getResource("/imagen/3b.png")));
+		btnMODPALT.setIcon(new ImageIcon(DATABASE_GAMESTOP.class.getResource("/imagen/3.png")));
+		//Boton transparente
+		btnMODPALT.setOpaque(false);
+		btnMODPALT.setContentAreaFilled(false);
+		btnMODPALT.setBorderPainted(false);
+		btnMODPALT.setBorderPainted(false);
+		btnMODPALT.setBackground(new Color(173, 216, 230));
+		btnMODPALT.setFont(new Font("Vijaya", Font.BOLD, 20));
+		btnMODPALT.setBounds(123, 328, 423, 182);
 		getContentPane().add(btnMODPALT);
 		btnMODPALT.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -84,21 +99,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 		}
 	});
 		
-		JButton btnDelete = new JButton("DELETE");
-		btnDelete.setBounds(187, 76, 89, 23);
-		contentPane.add(btnDelete);
-		/**
-		btnDelete.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			myPlataforma = myPlataformas.get(ComboPlataformas.getSelectedIndex());
-			System.out.println(ComboPlataformas.getSelectedItem());
-			myPlataforma.rmPlataforma(ComboPlataformas.getSelectedIndex(), myPlataforma);
-			
-			
 		
-		}
-	});
-		**/
 	
 		
 		
@@ -106,9 +107,18 @@ public class DATABASE_GAMESTOP extends JFrame {
 		
 		
 		
-		JButton btnADDPLAT = new JButton("Add Platform");
-		btnADDPLAT.setBounds(274, 54, 120, 66);
+		JButton btnADDPLAT = new JButton("");
+		btnADDPLAT.setSelectedIcon(new ImageIcon(DATABASE_GAMESTOP.class.getResource("/imagen/2.b.png")));
+		btnADDPLAT.setIcon(new ImageIcon(DATABASE_GAMESTOP.class.getResource("/imagen/2.png")));
+		btnADDPLAT.setBackground(new Color(135, 206, 235));
+		btnADDPLAT.setFont(new Font("Vijaya", Font.BOLD, 20));
+		btnADDPLAT.setBounds(123, 0, 386, 176);
 		getContentPane().add(btnADDPLAT);
+		//Boton transparente
+		btnADDPLAT.setOpaque(false);
+		btnADDPLAT.setContentAreaFilled(false);
+		btnADDPLAT.setBorderPainted(false);
+		btnADDPLAT.setBorderPainted(false);
 
 		btnADDPLAT.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -117,16 +127,7 @@ public class DATABASE_GAMESTOP extends JFrame {
 			frame.setVisible(true);
 		}
 	});
-		JButton btnRefs = new JButton("REFS");
-		btnRefs.setBounds(187, 199, 89, 23);
-		contentPane.add(btnRefs);
 		
-		
-		btnRefs.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			refrescar();
-		}
-	});
 		
 	}	
 		
@@ -179,6 +180,5 @@ public class DATABASE_GAMESTOP extends JFrame {
 					
 	            }
 			}
-			
 }
 
