@@ -50,9 +50,7 @@ public VentanaGame(Games game, DATA data , Plataforma plataforma  , JComboBox<Ga
 			textFieldCompany.setText(myGames2.toStringCompañia());
 			textFieldPriceGame.setText(String.valueOf(myGames2.getPrecio()));
 			textFieldPunGame.setText(String.valueOf(myGames2.getPuntuacion()));
-			textField_Age.setText(String.valueOf(myGames2.getEdadRecomendada()));
-			
-			
+			textField_Age.setText(String.valueOf(myGames2.getEdadRecomendada()));			
 		}
 		
 	});

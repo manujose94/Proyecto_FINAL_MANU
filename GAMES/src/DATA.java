@@ -40,47 +40,12 @@ public class DATA {
 
 	}
 	//---------------------------------------------
-	/**public void acceder(String usuario, String pass)
-    {
-        String cap="";
-       String sql="SELECT * FROM usuario WHERE nick='"+usuario+"' && password='"+pass+"'";
-        try {
-        	instruccion = (Statement) conexion.createStatement();
-        	misResultadosUsers  = instruccion.executeQuery(sql);
- 
-            while(misResultadosUsers.next())
-            {
-                cap=misResultadosUsers.getString("tipousuario");
-            }
-            if(cap.equals("Administrador"))
-            {
-                  
-                    JOptionPane.showMessageDialog(null, "Bienvenido");
-                    System.out.println("Administrador");
-                
-            }
-            if(cap.equals("Invitado"))
-            {
-            
-                    JOptionPane.showMessageDialog(null, "Bienvenido");
-                    System.out.println("Invitado");
-            }
-            if((!cap.equals("Administrador"))&& (!cap.equals("Invitado")))
-            {
-            	System.out.println("No existe user ");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DATA.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        }**/
-	//-----------------------------------------
 	
 	
 	public void rellenarCombobox(){
 		try{
 		instruccion = (Statement) conexion.createStatement();
-		conjuntoResultado = instruccion.executeQuery ("SELECT * FROM gamaes");
+		conjuntoResultado = instruccion.executeQuery ("SELECT * FROM item_game");
 		// Bucle While para iniciar la consulta
 		while (conjuntoResultado.next())
 		{
@@ -91,8 +56,8 @@ public class DATA {
 			myGame.setGenero((String) conjuntoResultado.getObject("Compañia"));
 			myGame.setIdGame(conjuntoResultado.getInt("IdGame"));
 			myGame.setPrecio(conjuntoResultado.getInt("Precio"));
-			myGame.setPuntuacion(conjuntoResultado.getInt("golesFavor"));
-			myGame.setEdadRecomendada(conjuntoResultado.getInt("Puntuacion"));
+			myGame.setPuntuacion(conjuntoResultado.getInt("Puntacion"));
+		
 		
 			
 		}
@@ -106,7 +71,7 @@ public class DATA {
 	public void readingGames(JComboBox ComboBox){
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			misResultadosGame = instruccion.executeQuery("SELECT * FROM games ");
+			misResultadosGame = instruccion.executeQuery("SELECT * FROM item_game ");
 			
 			//System.out.println("Estoy en leerEquipos");		
 			
@@ -129,7 +94,7 @@ public class DATA {
 		System.out.println("read myPlataforma");
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			misResultadosPlataforma = instruccion.executeQuery("SELECT * FROM plataforma");
+			misResultadosPlataforma = instruccion.executeQuery("SELECT * FROM plataform");
 			while(misResultadosPlataforma.next()){
 				Plataforma newPlata = new Plataforma (misResultadosPlataforma.getString("nombrePlataforma"),misResultadosPlataforma.getInt("numGames"), misResultadosPlataforma.getInt("IdPlataforma"));
 				myPlataforma.add(newPlata);
@@ -146,7 +111,7 @@ public class DATA {
 		try{
 			
 			instruccion = (Statement) conexion.createStatement();
-			String sql_Strng1 = "DELETE FROM `games`.`games` WHERE `games`.`IdPlataforma` ="+myGame.getIdPlataforma();
+			String sql_Strng1 = "DELETE FROM `games`.`item_game` WHERE `item_game`.`IdPlataforma` ="+myGame.getIdPlataforma();
 			String sql_Strng2 = "DELETE FROM `games`.`plataforma` WHERE `plataforma`.`IdPlataforma` ="+myPlataforma.getIdPlataforma();
 			
 			System.out.println(sql_Strng1);
@@ -191,7 +156,7 @@ public class DATA {
 		System.out.println("++ Game");
 		try{
 			instruccion = (Statement) conexion.createStatement();
-			misResultadosGame = instruccion.executeQuery("SELECT * FROM games WHERE `IdPlataforma`="+idPlataforma);
+			misResultadosGame = instruccion.executeQuery("SELECT * FROM item_game WHERE `IdPlataforma`="+idPlataforma);
 			while(misResultadosGame.next()){
 				Games newGame = new Games (misResultadosGame.getString("nombreGame"),misResultadosGame.getString("Genero"),misResultadosGame.getString("Compañia"), misResultadosGame.getInt("EdadRecomendada"), misResultadosGame.getInt("Precio"),
 						misResultadosGame.getInt("Puntuacion"), misResultadosGame.getInt("IdGame"));
@@ -209,7 +174,7 @@ public class DATA {
 		try{
 			
 			instruccion = (Statement) conexion.createStatement();
-			String sql_Strng = "DELETE FROM `games`.`games` WHERE `games`.`IdGame` ="+myGame.getIdGame();
+			String sql_Strng = "DELETE FROM `games`.`item_game` WHERE `games`.`IdGame` ="+myGame.getIdGame();
 			System.out.println(sql_Strng);
 			instruccion.executeUpdate(sql_Strng);
 			
@@ -224,7 +189,7 @@ public class DATA {
 			try{
 				System.out.println("Update game Inicio ");
 				instruccion = (Statement) conexion.createStatement();
-				String sql = "UPDATE `games` SET `nombreGame`=\""+gameModificado.toString()+"\", `Genero`=\""+gameModificado.toStringGenero()+
+				String sql = "UPDATE `item_game` SET `nombreGame`=\""+gameModificado.toString()+"\", `Genero`=\""+gameModificado.toStringGenero()+
 						"\", `Compañia`=\""+gameModificado.toStringCompañia()+"\", `EdadRecomendada`="+gameModificado.getEdadRecomendada()+", `Precio`="+gameModificado.getPrecio()+",`Puntuacion`="+gameModificado.getPuntuacion()+" WHERE `IdGame`="+gameModificado.getIdGame();
 				System.out.println(sql);
 				instruccion.executeUpdate(sql);
@@ -234,7 +199,7 @@ public class DATA {
 		}else{
 			try{
 				instruccion = (Statement) conexion.createStatement();
-				String sql_Strng="INSERT INTO  `games`.`games` (`IdGame` ,`IdPlataforma` ,`nombreGame` ,`Genero` ,`Compañia` ,`EdadRecomendada` ,`Precio`,`Puntuacion`)";
+				String sql_Strng="INSERT INTO  `games`.`item_game` (`IdGame` ,`IdPlataforma` ,`nombreGame` ,`Genero` ,`Compañia` ,`EdadRecomendada` ,`Precio`,`Puntuacion`)";
 				sql_Strng = sql_Strng+"VALUES ('"+gameModificado.getIdGame()+"',  '"+gameModificado.getIdPlataforma()+"',  '"+gameModificado.toString()+"',  '"+gameModificado.toStringGenero()+"',  '"+gameModificado.toStringCompañia()+"', '"+gameModificado.getEdadRecomendada()+"', '"+gameModificado.getPrecio()+"' ,  '"+gameModificado.getPuntuacion()+"' );";
 				System.out.println(sql_Strng);
 				instruccion.executeUpdate(sql_Strng);

@@ -182,14 +182,14 @@ public class Login  extends JFrame{
 		//textFieldPASS.setColumns(10);
 		
 		btnACCEDER = new JButton("");
-		btnACCEDER.setSelectedIcon(new ImageIcon("C:\\Users\\ManuelJose\\Pictures\\llaveespada2.png"));
+		btnACCEDER.setSelectedIcon(new ImageIcon("/imagen/Key.png"));
 		//btnACCEDER.setForeground(Color.BLUE);
 		//btnACCEDER.setBackground(Color.WHITE);
 		btnACCEDER.setOpaque(false);
 		btnACCEDER.setContentAreaFilled(false);
 		btnACCEDER.setBorderPainted(false);
 		btnACCEDER.setBorderPainted(false);
-		btnACCEDER.setIcon(new ImageIcon("C:\\Users\\ManuelJose\\Pictures\\llaveespada.png"));
+		btnACCEDER.setIcon(new ImageIcon("/imagen/Key.png"));
 		btnACCEDER.setBounds(299, 330, 263, 120);
 		getContentPane().add(btnACCEDER);
 		//(new ImageIcon(getClass().getResource("/imagen/GameStop_logo5.png")).getImage());
@@ -216,7 +216,7 @@ public class Login  extends JFrame{
 	public void acceder(String usuario, String pass)
     {
         String tipo="";
-       String sql="SELECT * FROM usuario WHERE nick='"+usuario+"' && password='"+pass+"'";
+       String sql="SELECT * FROM USERS WHERE nick='"+usuario+"' && password='"+pass+"'";
         try {
         	instruccion = (Statement) conexion.createStatement();
         	misResultadosUsers  = instruccion.executeQuery(sql);

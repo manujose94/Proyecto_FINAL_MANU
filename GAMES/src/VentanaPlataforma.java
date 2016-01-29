@@ -204,7 +204,7 @@ public class VentanaPlataforma extends JFrame{
 	}
 	
 		private void refrescarData(){
-			
+		
 			ComboBoxGames.removeAllItems();
 			//para que que recarga cada uno de los equipos del arayliat gamePlataforma
 			myGamesPlat = myPlataforma.getgamePlataforma();
